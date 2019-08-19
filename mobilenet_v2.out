@@ -1,0 +1,365 @@
+Copying /home/mathy/benchmark-tfl/build/rpi//beeswax to /root/data/kbench-energy/20190817-181838/beeswax
+Copying /home/mathy/benchmark-tfl/build/rpi//bumblebee to /root/data/kbench-energy/20190817-181838/bumblebee
+Copying /home/mathy/conv-approximation/dump_parser/reconstructed_mobilenet_v2.tflite to /root/data/kbench-energy/20190817-181838/reconstructed_mobilenet_v2.tflite
+Copying /home/mathy/conv-approximation/dump_parser/labels.txt to /root/data/kbench-energy/20190817-181838/labels.txt
+
+
+Capturing energy readings
+Running inferences
+Stop capturing energy readings
+
+Pull back energy readings
+Pull back profiler files
+Processing outputs
+Parsing inferences output
+Processing accuracy
+Parsing energy output
+Processing energy and power
+Processing profilers
+------------------------------ BENCHMARK SUMMARY ------------------------------
+
+Total images executed:				25
+Inferences per image:				8
+Average inference time was:			467.2915 ms (±6.5252)
+Top 1 accuracy is:		88.0000%
+Top 5 accuracy is:		96.0000%
+Average energy spent:   			1.2898 J (±0.0199)
+Average power:  				2.7601 W (±0.0127)
+
+----------------------------------- PROFILER -----------------------------------
+
+CONV_2D
+Average execution time:			44682.8250 μs (±3544.3351)
+Average energy spent: 			0.1282 J (±0.0069)
+Average power:				2.8756 W (±0.0726)
+
+DEPTHWISE_CONV_2D
+Average execution time:			30650.5150 μs (±1162.6869)
+Average energy spent: 			0.0724 J (±0.0026)
+Average power:				2.3612 W (±0.0407)
+
+CONV_2D
+Average execution time:			10141.3250 μs (±518.3493)
+Average energy spent: 			0.0339 J (±0.0016)
+Average power:				3.3337 W (±0.1063)
+
+CONV_2D
+Average execution time:			26062.3300 μs (±1184.7933)
+Average energy spent: 			0.0824 J (±0.0025)
+Average power:				3.1673 W (±0.0723)
+
+DEPTHWISE_CONV_2D
+Average execution time:			21257.4050 μs (±1015.2201)
+Average energy spent: 			0.0536 J (±0.0024)
+Average power:				2.5307 W (±0.0521)
+
+CONV_2D
+Average execution time:			7096.5350 μs (±650.6071)
+Average energy spent: 			0.0245 J (±0.0017)
+Average power:				3.4320 W (±0.1690)
+
+CONV_2D
+Average execution time:			11746.6700 μs (±1511.3741)
+Average energy spent: 			0.0384 J (±0.0032)
+Average power:				3.2940 W (±0.1744)
+
+DEPTHWISE_CONV_2D
+Average execution time:			29878.5000 μs (±1100.2149)
+Average energy spent: 			0.0714 J (±0.0025)
+Average power:				2.3931 W (±0.0443)
+
+CONV_2D
+Average execution time:			9666.7500 μs (±895.2428)
+Average energy spent: 			0.0328 J (±0.0017)
+Average power:				3.3892 W (±0.1472)
+
+ADD
+Average execution time:			715.4050 μs (±51.3112)
+Average energy spent: 			0.0035 J (±0.0024)
+Average power:				3.5459 W (±2.3726)
+
+CONV_2D
+Average execution time:			11891.6800 μs (±1569.1269)
+Average energy spent: 			0.0387 J (±0.0030)
+Average power:				3.2723 W (±0.1709)
+
+DEPTHWISE_CONV_2D
+Average execution time:			9353.3450 μs (±348.2327)
+Average energy spent: 			0.0249 J (±0.0013)
+Average power:				2.6567 W (±0.0499)
+
+CONV_2D
+Average execution time:			3031.1100 μs (±533.4586)
+Average energy spent: 			0.0112 J (±0.0018)
+Average power:				3.7926 W (±0.3525)
+
+CONV_2D
+Average execution time:			4458.5450 μs (±583.3020)
+Average energy spent: 			0.0171 J (±0.0016)
+Average power:				3.8938 W (±0.3152)
+
+DEPTHWISE_CONV_2D
+Average execution time:			9947.2350 μs (±402.8833)
+Average energy spent: 			0.0264 J (±0.0014)
+Average power:				2.6415 W (±0.0877)
+
+CONV_2D
+Average execution time:			4725.0750 μs (±320.3279)
+Average energy spent: 			0.0164 J (±0.0013)
+Average power:				3.4926 W (±0.1773)
+
+ADD
+Average execution time:			191.2700 μs (±23.1792)
+Average energy spent: 			0.0010 J (±0.0022)
+Average power:				1.0354 W (±2.1555)
+
+CONV_2D
+Average execution time:			4498.2050 μs (±613.2434)
+Average energy spent: 			0.0164 J (±0.0018)
+Average power:				3.6767 W (±0.2148)
+
+DEPTHWISE_CONV_2D
+Average execution time:			9928.9600 μs (±334.9774)
+Average energy spent: 			0.0263 J (±0.0015)
+Average power:				2.6412 W (±0.0841)
+
+CONV_2D
+Average execution time:			4741.9950 μs (±299.4767)
+Average energy spent: 			0.0165 J (±0.0013)
+Average power:				3.4713 W (±0.1789)
+
+ADD
+Average execution time:			193.2200 μs (±26.5946)
+Average energy spent: 			0.0009 J (±0.0020)
+Average power:				0.9304 W (±2.0327)
+
+CONV_2D
+Average execution time:			4649.2550 μs (±572.8639)
+Average energy spent: 			0.0168 J (±0.0018)
+Average power:				3.6312 W (±0.2061)
+
+DEPTHWISE_CONV_2D
+Average execution time:			2791.1350 μs (±111.9320)
+Average energy spent: 			0.0099 J (±0.0013)
+Average power:				3.5532 W (±0.2800)
+
+CONV_2D
+Average execution time:			1759.7450 μs (±251.6500)
+Average energy spent: 			0.0073 J (±0.0015)
+Average power:				4.4070 W (±0.8067)
+
+CONV_2D
+Average execution time:			3899.4550 μs (±470.8263)
+Average energy spent: 			0.0150 J (±0.0018)
+Average power:				3.8977 W (±0.2831)
+
+DEPTHWISE_CONV_2D
+Average execution time:			4282.3500 μs (±225.6992)
+Average energy spent: 			0.0134 J (±0.0013)
+Average power:				3.1263 W (±0.2182)
+
+CONV_2D
+Average execution time:			3187.4550 μs (±385.2327)
+Average energy spent: 			0.0120 J (±0.0014)
+Average power:				3.7822 W (±0.2689)
+
+ADD
+Average execution time:			91.6900 μs (±18.0545)
+Average energy spent: 			0.0005 J (±0.0018)
+Average power:				0.5410 W (±1.7865)
+
+CONV_2D
+Average execution time:			3836.0000 μs (±446.3865)
+Average energy spent: 			0.0152 J (±0.0018)
+Average power:				3.9620 W (±0.2624)
+
+DEPTHWISE_CONV_2D
+Average execution time:			4757.2050 μs (±238.5850)
+Average energy spent: 			0.0144 J (±0.0016)
+Average power:				3.0368 W (±0.1869)
+
+CONV_2D
+Average execution time:			3140.1800 μs (±343.2403)
+Average energy spent: 			0.0118 J (±0.0013)
+Average power:				3.7846 W (±0.2640)
+
+ADD
+Average execution time:			90.3650 μs (±14.6134)
+Average energy spent: 			0.0007 J (±0.0020)
+Average power:				0.6768 W (±1.9823)
+
+CONV_2D
+Average execution time:			3788.0600 μs (±377.9387)
+Average energy spent: 			0.0152 J (±0.0017)
+Average power:				3.9842 W (±0.2404)
+
+DEPTHWISE_CONV_2D
+Average execution time:			4147.9800 μs (±186.2285)
+Average energy spent: 			0.0130 J (±0.0011)
+Average power:				3.1990 W (±0.2012)
+
+CONV_2D
+Average execution time:			3134.0050 μs (±366.4503)
+Average energy spent: 			0.0120 J (±0.0013)
+Average power:				3.8188 W (±0.2640)
+
+ADD
+Average execution time:			90.2400 μs (±13.3997)
+Average energy spent: 			0.0006 J (±0.0019)
+Average power:				0.6123 W (±1.8972)
+
+CONV_2D
+Average execution time:			3818.7350 μs (±423.7773)
+Average energy spent: 			0.0151 J (±0.0018)
+Average power:				3.9952 W (±0.2589)
+
+DEPTHWISE_CONV_2D
+Average execution time:			4164.9200 μs (±220.5323)
+Average energy spent: 			0.0134 J (±0.0013)
+Average power:				3.1845 W (±0.2052)
+
+CONV_2D
+Average execution time:			5161.4400 μs (±435.4425)
+Average energy spent: 			0.0182 J (±0.0015)
+Average power:				3.5361 W (±0.1500)
+
+CONV_2D
+Average execution time:			7395.4500 μs (±770.7679)
+Average energy spent: 			0.0262 J (±0.0022)
+Average power:				3.5726 W (±0.1559)
+
+DEPTHWISE_CONV_2D
+Average execution time:			6372.3850 μs (±302.3868)
+Average energy spent: 			0.0184 J (±0.0016)
+Average power:				2.8841 W (±0.1223)
+
+CONV_2D
+Average execution time:			7549.3950 μs (±897.1959)
+Average energy spent: 			0.0256 J (±0.0026)
+Average power:				3.4059 W (±0.1395)
+
+ADD
+Average execution time:			141.0700 μs (±25.0391)
+Average energy spent: 			0.0010 J (±0.0022)
+Average power:				1.0153 W (±2.1836)
+
+CONV_2D
+Average execution time:			7745.6200 μs (±950.5040)
+Average energy spent: 			0.0265 J (±0.0025)
+Average power:				3.4502 W (±0.1648)
+
+DEPTHWISE_CONV_2D
+Average execution time:			6361.7400 μs (±280.7303)
+Average energy spent: 			0.0181 J (±0.0014)
+Average power:				2.8501 W (±0.1184)
+
+CONV_2D
+Average execution time:			7658.6950 μs (±850.7566)
+Average energy spent: 			0.0257 J (±0.0021)
+Average power:				3.3959 W (±0.1618)
+
+ADD
+Average execution time:			138.1900 μs (±23.6777)
+Average energy spent: 			0.0010 J (±0.0021)
+Average power:				0.9727 W (±2.0862)
+
+CONV_2D
+Average execution time:			7890.7250 μs (±1288.0968)
+Average energy spent: 			0.0268 J (±0.0029)
+Average power:				3.4213 W (±0.2064)
+
+DEPTHWISE_CONV_2D
+Average execution time:			1782.3650 μs (±107.4447)
+Average energy spent: 			0.0074 J (±0.0013)
+Average power:				4.4081 W (±0.7373)
+
+CONV_2D
+Average execution time:			3440.5300 μs (±549.5548)
+Average energy spent: 			0.0129 J (±0.0016)
+Average power:				3.7903 W (±0.2807)
+
+CONV_2D
+Average execution time:			7492.2100 μs (±406.2107)
+Average energy spent: 			0.0260 J (±0.0017)
+Average power:				3.4637 W (±0.1315)
+
+DEPTHWISE_CONV_2D
+Average execution time:			2468.2200 μs (±113.2607)
+Average energy spent: 			0.0084 J (±0.0013)
+Average power:				3.4674 W (±0.2496)
+
+CONV_2D
+Average execution time:			5558.1700 μs (±1010.1640)
+Average energy spent: 			0.0195 J (±0.0026)
+Average power:				3.5432 W (±0.2459)
+
+ADD
+Average execution time:			57.8900 μs (±12.9367)
+Average energy spent: 			0.0002 J (±0.0011)
+Average power:				0.1892 W (±1.0817)
+
+CONV_2D
+Average execution time:			7464.8650 μs (±375.1679)
+Average energy spent: 			0.0257 J (±0.0017)
+Average power:				3.4289 W (±0.1319)
+
+DEPTHWISE_CONV_2D
+Average execution time:			2454.7600 μs (±115.7144)
+Average energy spent: 			0.0083 J (±0.0012)
+Average power:				3.4664 W (±0.2447)
+
+CONV_2D
+Average execution time:			5482.1700 μs (±891.8107)
+Average energy spent: 			0.0193 J (±0.0024)
+Average power:				3.5615 W (±0.2326)
+
+ADD
+Average execution time:			57.6950 μs (±8.2808)
+Average energy spent: 			0.0003 J (±0.0014)
+Average power:				0.3342 W (±1.3929)
+
+CONV_2D
+Average execution time:			7453.2150 μs (±356.2181)
+Average energy spent: 			0.0256 J (±0.0017)
+Average power:				3.4415 W (±0.1234)
+
+DEPTHWISE_CONV_2D
+Average execution time:			2787.6900 μs (±121.0687)
+Average energy spent: 			0.0091 J (±0.0011)
+Average power:				3.3034 W (±0.2302)
+
+CONV_2D
+Average execution time:			11049.8000 μs (±1563.3950)
+Average energy spent: 			0.0374 J (±0.0036)
+Average power:				3.4195 W (±0.1747)
+
+CONV_2D
+Average execution time:			15124.6200 μs (±1847.4802)
+Average energy spent: 			0.0525 J (±0.0048)
+Average power:				3.4804 W (±0.1180)
+
+AVERAGE_POOL_2D
+Average execution time:			428.6750 μs (±37.8694)
+Average energy spent: 			0.0021 J (±0.0026)
+Average power:				2.0911 W (±2.5748)
+
+CONV_2D
+Average execution time:			20871.9700 μs (±3978.9553)
+Average energy spent: 			0.0500 J (±0.0095)
+Average power:				2.3907 W (±0.0477)
+
+RESHAPE
+Average execution time:			5.1250 μs (±2.2202)
+Average energy spent: 			0.0000 J (±0.0004)
+Average power:				0.0445 W (±0.4428)
+
+SOFTMAX
+Average execution time:			276.5650 μs (±23.3051)
+Average energy spent: 			0.0009 J (±0.0018)
+Average power:				0.9166 W (±1.8054)
+
+--------------------------------------------------------------------------------
+
+Generating result files in /home/mathy/kbench/scripts/output/tflite/reconstructed_mobilenet_v2/20190817-181838/...
+Done
+Cleaning device dir:  /root/data/kbench-energy/20190817-181838

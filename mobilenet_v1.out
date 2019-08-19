@@ -1,0 +1,190 @@
+Copying /home/mathy/benchmark-tfl/build/rpi//beeswax to /root/data/kbench-energy/20190817-181303/beeswax
+Copying /home/mathy/benchmark-tfl/build/rpi//bumblebee to /root/data/kbench-energy/20190817-181303/bumblebee
+Copying /home/mathy/conv-approximation/dump_parser/reconstructed_mobilenet_v1.tflite to /root/data/kbench-energy/20190817-181303/reconstructed_mobilenet_v1.tflite
+Copying /home/mathy/conv-approximation/dump_parser/labels.txt to /root/data/kbench-energy/20190817-181303/labels.txt
+
+
+Capturing energy readings
+Running inferences
+Stop capturing energy readings
+
+Pull back energy readings
+Pull back profiler files
+Processing outputs
+Parsing inferences output
+Processing accuracy
+Parsing energy output
+Processing energy and power
+Processing profilers
+------------------------------ BENCHMARK SUMMARY ------------------------------
+
+Total images executed:				25
+Inferences per image:				8
+Average inference time was:			568.7515 ms (±5.6370)
+Top 1 accuracy is:		88.0000%
+Top 5 accuracy is:		100.0000%
+Average energy spent:   			1.6465 J (±0.0153)
+Average power:  				2.8950 W (±0.0154)
+
+----------------------------------- PROFILER -----------------------------------
+
+CONV_2D
+Average execution time:			44279.2600 μs (±2836.4248)
+Average energy spent: 			0.1274 J (±0.0055)
+Average power:				2.8766 W (±0.0698)
+
+DEPTHWISE_CONV_2D
+Average execution time:			30602.7800 μs (±994.2456)
+Average energy spent: 			0.0725 J (±0.0024)
+Average power:				2.3738 W (±0.0390)
+
+CONV_2D
+Average execution time:			26418.5800 μs (±1511.5472)
+Average energy spent: 			0.0848 J (±0.0030)
+Average power:				3.2090 W (±0.1024)
+
+DEPTHWISE_CONV_2D
+Average execution time:			14488.6150 μs (±621.0511)
+Average energy spent: 			0.0375 J (±0.0017)
+Average power:				2.5923 W (±0.0631)
+
+CONV_2D
+Average execution time:			19973.6450 μs (±1038.9862)
+Average energy spent: 			0.0639 J (±0.0022)
+Average power:				3.1927 W (±0.0878)
+
+DEPTHWISE_CONV_2D
+Average execution time:			23970.2550 μs (±970.2112)
+Average energy spent: 			0.0588 J (±0.0022)
+Average power:				2.4583 W (±0.0545)
+
+CONV_2D
+Average execution time:			32870.6650 μs (±3478.9383)
+Average energy spent: 			0.1070 J (±0.0063)
+Average power:				3.2692 W (±0.1625)
+
+DEPTHWISE_CONV_2D
+Average execution time:			8189.4350 μs (±373.6452)
+Average energy spent: 			0.0224 J (±0.0011)
+Average power:				2.7377 W (±0.0701)
+
+CONV_2D
+Average execution time:			17919.8550 μs (±3314.8938)
+Average energy spent: 			0.0564 J (±0.0062)
+Average power:				3.1968 W (±0.2347)
+
+DEPTHWISE_CONV_2D
+Average execution time:			13355.1800 μs (±500.9057)
+Average energy spent: 			0.0336 J (±0.0013)
+Average power:				2.5218 W (±0.0603)
+
+CONV_2D
+Average execution time:			33242.1500 μs (±2453.6668)
+Average energy spent: 			0.1062 J (±0.0046)
+Average power:				3.2015 W (±0.1073)
+
+DEPTHWISE_CONV_2D
+Average execution time:			3892.3300 μs (±165.5742)
+Average energy spent: 			0.0122 J (±0.0010)
+Average power:				3.1450 W (±0.1481)
+
+CONV_2D
+Average execution time:			19343.5700 μs (±3010.0762)
+Average energy spent: 			0.0599 J (±0.0060)
+Average power:				3.1175 W (±0.1715)
+
+DEPTHWISE_CONV_2D
+Average execution time:			6406.8050 μs (±248.9898)
+Average energy spent: 			0.0178 J (±0.0014)
+Average power:				2.7715 W (±0.1193)
+
+CONV_2D
+Average execution time:			34642.3400 μs (±4443.2669)
+Average energy spent: 			0.1083 J (±0.0092)
+Average power:				3.1437 W (±0.1380)
+
+DEPTHWISE_CONV_2D
+Average execution time:			5672.0300 μs (±253.7962)
+Average energy spent: 			0.0162 J (±0.0013)
+Average power:				2.8318 W (±0.1041)
+
+CONV_2D
+Average execution time:			34169.4700 μs (±3929.6034)
+Average energy spent: 			0.1077 J (±0.0085)
+Average power:				3.1658 W (±0.1215)
+
+DEPTHWISE_CONV_2D
+Average execution time:			5634.6950 μs (±211.3874)
+Average energy spent: 			0.0159 J (±0.0013)
+Average power:				2.8202 W (±0.0962)
+
+CONV_2D
+Average execution time:			33401.3100 μs (±3585.4272)
+Average energy spent: 			0.1060 J (±0.0079)
+Average power:				3.1829 W (±0.1129)
+
+DEPTHWISE_CONV_2D
+Average execution time:			5633.4250 μs (±192.3160)
+Average energy spent: 			0.0158 J (±0.0012)
+Average power:				2.8199 W (±0.0837)
+
+CONV_2D
+Average execution time:			33225.5850 μs (±3661.3292)
+Average energy spent: 			0.1058 J (±0.0079)
+Average power:				3.1940 W (±0.1142)
+
+DEPTHWISE_CONV_2D
+Average execution time:			5631.6000 μs (±199.4695)
+Average energy spent: 			0.0158 J (±0.0013)
+Average power:				2.8316 W (±0.1045)
+
+CONV_2D
+Average execution time:			33268.5950 μs (±3542.2409)
+Average energy spent: 			0.1060 J (±0.0083)
+Average power:				3.1946 W (±0.1040)
+
+DEPTHWISE_CONV_2D
+Average execution time:			1744.9350 μs (±82.9560)
+Average energy spent: 			0.0068 J (±0.0011)
+Average power:				4.0003 W (±0.5802)
+
+CONV_2D
+Average execution time:			20205.2550 μs (±4221.3347)
+Average energy spent: 			0.0672 J (±0.0109)
+Average power:				3.3444 W (±0.1085)
+
+DEPTHWISE_CONV_2D
+Average execution time:			2982.0800 μs (±111.9067)
+Average energy spent: 			0.0096 J (±0.0009)
+Average power:				3.2166 W (±0.2453)
+
+CONV_2D
+Average execution time:			36812.2200 μs (±8149.3956)
+Average energy spent: 			0.1239 J (±0.0212)
+Average power:				3.3744 W (±0.0856)
+
+AVERAGE_POOL_2D
+Average execution time:			340.6100 μs (±31.3734)
+Average energy spent: 			0.0015 J (±0.0023)
+Average power:				1.5417 W (±2.2843)
+
+CONV_2D
+Average execution time:			16634.7650 μs (±3212.3350)
+Average energy spent: 			0.0402 J (±0.0076)
+Average power:				2.4266 W (±0.0710)
+
+RESHAPE
+Average execution time:			5.0250 μs (±0.4943)
+Average energy spent: 			0.0001 J (±0.0005)
+Average power:				0.0666 W (±0.5397)
+
+SOFTMAX
+Average execution time:			276.4800 μs (±19.3054)
+Average energy spent: 			0.0012 J (±0.0020)
+Average power:				1.2123 W (±1.9944)
+
+--------------------------------------------------------------------------------
+
+Generating result files in /home/mathy/kbench/scripts/output/tflite/reconstructed_mobilenet_v1/20190817-181303/...
+Done
+Cleaning device dir:  /root/data/kbench-energy/20190817-181303
