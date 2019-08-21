@@ -11,21 +11,23 @@ class State(enum.Enum):
     DRAGUNOV = 3
 
 class Layer:
-    op_name = ""
+    name = ""
     time = 0.0
     energy = 0.0
     power = 0.0
     extra_time = 0.0
     extra_energy = 0.0
     extra_power = 0.0
+    conv_index = -1
     def __init__(self):
-        self.op_name = ""
+        self.name = ""
         self.time = 0.0
         self.energy = 0.0
         self.power = 0.0
         self.extra_time = 0.0
         self.extra_energy = 0.0
         self.extra_power = 0.0
+        conv_index = -1
 
 average_number_pattern = re.compile(r".+\s+(?P<mean>\d+\.\d+)\s+\w+\s+\(.(?P<stddev>\d+\.\d+)\)")
 def mean_and_stddev(lines, i):
@@ -34,7 +36,7 @@ def mean_and_stddev(lines, i):
         stddev = float(match.group("stddev"))
         return (mean, stddev)
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     original = []
     approx = []
 
@@ -64,15 +66,25 @@ if __name__ == "__main__":
     while "----------------" not in original_lines[original_i]:
         if state == State.NEW_OP:
             new_op = Layer()
-            new_op.op_name = original_lines[original_i]
-            if new_op.op_name in ["CONV_2D", "Dragunov_Slicing"]:
+            op_name = original_lines[original_i]
+            if op_name in ["CONV_2D", "Dragunov_Slicing"]:
+                new_op.conv_index = conv_count
                 conv_count += 1
-            if "Dragunov_" in new_op.op_name:
+            if "Dragunov_" in op_name:
                 state = State.DRAGUNOV
+                new_op.name = "Dragunov"
                 original_i += 6 * 4
             else:
+                new_op.name = op_name
                 state = State.BUILTIN_OP
-                (mean, stddev) = mean_and_stddev(original_lines, original_i + 1)
+                for (i, j) in zip([1, 2, 3], ['time', 'energy', 'power']):
+                    (mean, stddev) = mean_and_stddev(original_lines, original_i + i)
+                    setattr(new_op, j, mean)
                 original_i += 4
             original.append(new_op)
             state = State.NEW_OP
+
+    for i in range(len(original)):
+        op = original[i]
+        if op.conv_index > -1:
+            print("Conv %d :\n    T %.4f\n    E %.4f\n    P %.4f" % (op.conv_index, op.time, op.energy, op.power))
