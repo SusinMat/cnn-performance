@@ -36,6 +36,42 @@ def mean_and_stddev(lines, i):
         stddev = float(match.group("stddev"))
         return (mean, stddev)
 
+def parse_lines(lines):
+    ops = []
+    i = 0
+    conv_count = 0
+
+    while "- PROFILER -" not in lines[i]:
+        i += 1
+    i += 1
+
+    builtin_offsets = range(1, 4)
+    builtin_attributes = ['time', 'energy', 'power']
+    dragunov_offsets = [o for o in range(1, 24) if o % 4 != 0]
+    extra_attributes = ['extra_' + attribute for attribute in builtin_attributes]
+    dragunov_attributes = extra_attributes + 3 * builtin_attributes + extra_attributes + builtin_attributes
+
+    while "----------------" not in lines[i]:
+        new_op = Layer()
+        op_name = lines[i]
+        if op_name in ["CONV_2D", "Dragunov_Slicing"]:
+            new_op.conv_index = conv_count
+            conv_count += 1
+        if "Dragunov_" in op_name:
+            new_op.name = "Dragunov"
+            for (offset, attribute) in zip(dragunov_offsets, dragunov_attributes):
+                (mean, stddev) = mean_and_stddev(lines, i + offset)
+                setattr(new_op, attribute, getattr(new_op, attribute) + mean)
+            i += 6 * 4
+        else: # builtin op
+            new_op.name = op_name
+            for (offset, attribute) in zip(builtin_offsets, builtin_attributes):
+                (mean, stddev) = mean_and_stddev(lines, i + offset)
+                setattr(new_op, attribute, mean)
+            i += 4
+            ops.append(new_op)
+    return ops
+
 if __name__ == '__main__':
     original = []
     approx = []
@@ -53,38 +89,9 @@ if __name__ == '__main__':
     else:
         approx_lines = None
 
-    original_i = 0
-    conv_count = 0
-
-    while "- PROFILER -" not in original_lines[original_i]:
-        original_i += 1
-    original_i += 1
-
-    builtin_offsets = range(1, 4)
-    builtin_attributes = ['time', 'energy', 'power']
-    dragunov_offsets = [o for o in range(1, 24) if o % 4 != 0]
-    extra_attributes = ['extra_' + attribute for attribute in builtin_attributes]
-    dragunov_attributes = extra_attributes + 3 * builtin_attributes + extra_attributes + builtin_attributes
-
-    while "----------------" not in original_lines[original_i]:
-        new_op = Layer()
-        op_name = original_lines[original_i]
-        if op_name in ["CONV_2D", "Dragunov_Slicing"]:
-            new_op.conv_index = conv_count
-            conv_count += 1
-        if "Dragunov_" in op_name:
-            new_op.name = "Dragunov"
-            for (offset, attribute) in zip(dragunov_offsets, dragunov_attributes):
-                (mean, stddev) = mean_and_stddev(original_lines, original_i + offset)
-                setattr(new_op, attribute, getattr(new_op, attribute) + mean)
-            original_i += 6 * 4
-        else: # builtin op
-            new_op.name = op_name
-            for (offset, attribute) in zip(builtin_offsets, builtin_attributes):
-                (mean, stddev) = mean_and_stddev(original_lines, original_i + offset)
-                setattr(new_op, attribute, mean)
-            original_i += 4
-            original.append(new_op)
+    original = parse_lines(original_lines)
+    if approx_lines is not None:
+        approx = parse_lines(approx_lines)
 
     if approx_lines is None:
         for i in range(len(original)):
