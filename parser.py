@@ -28,6 +28,12 @@ class Layer:
         self.extra_energy = 0.0
         self.extra_power = 0.0
         conv_index = -1
+    def total_time(self):
+        return self.time + self.extra_time
+    def total_energy(self):
+        return self.energy + self.extra_energy
+    def total_power(self):
+        return self.power + self.extra_power
 
 average_number_pattern = re.compile(r".+\s+(?P<mean>\d+\.\d+)\s+\w+\s+\(.(?P<stddev>\d+\.\d+)\)")
 def mean_and_stddev(lines, i):
@@ -110,9 +116,9 @@ if __name__ == '__main__':
                 print("        Energy       %.4f" % (original_op.energy))
                 print("        Power        %.4f" % (original_op.power))
                 print("    Approximate :")
-                print("        Total time   %.4f" % (approx_op.time + approx_op.extra_time))
-                print("        Total energy %.4f" % (approx_op.energy + approx_op.extra_energy))
-                print("        Total power  %.4f" % (approx_op.power + approx_op.extra_power))
+                print("        Total time   %.4f" % (approx_op.total_time()))
+                print("        Total energy %.4f" % (approx_op.total_energy()))
+                print("        Total power  %.4f" % (approx_op.total_power()))
                 print("        Time         %.4f" % (approx_op.time))
                 print("        Energy       %.4f" % (approx_op.energy))
                 print("        Power        %.4f" % (approx_op.power))
