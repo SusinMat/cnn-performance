@@ -53,38 +53,65 @@ if __name__ == '__main__':
     else:
         approx_lines = None
 
-
     original_i = 0
     conv_count = 0
-    state = State.NEW_OP
 
     while "- PROFILER -" not in original_lines[original_i]:
         original_i += 1
     original_i += 1
 
+    builtin_offsets = range(1, 4)
+    builtin_attributes = ['time', 'energy', 'power']
+    dragunov_offsets = [o for o in range(1, 24) if o % 4 != 0]
+    extra_attributes = ['extra_' + attribute for attribute in builtin_attributes]
+    dragunov_attributes = extra_attributes + 3 * builtin_attributes + extra_attributes + builtin_attributes
 
     while "----------------" not in original_lines[original_i]:
-        if state == State.NEW_OP:
-            new_op = Layer()
-            op_name = original_lines[original_i]
-            if op_name in ["CONV_2D", "Dragunov_Slicing"]:
-                new_op.conv_index = conv_count
-                conv_count += 1
-            if "Dragunov_" in op_name:
-                state = State.DRAGUNOV
-                new_op.name = "Dragunov"
-                original_i += 6 * 4
-            else:
-                new_op.name = op_name
-                state = State.BUILTIN_OP
-                for (i, j) in zip([1, 2, 3], ['time', 'energy', 'power']):
-                    (mean, stddev) = mean_and_stddev(original_lines, original_i + i)
-                    setattr(new_op, j, mean)
-                original_i += 4
+        new_op = Layer()
+        op_name = original_lines[original_i]
+        if op_name in ["CONV_2D", "Dragunov_Slicing"]:
+            new_op.conv_index = conv_count
+            conv_count += 1
+        if "Dragunov_" in op_name:
+            new_op.name = "Dragunov"
+            for (offset, attribute) in zip(dragunov_offsets, dragunov_attributes):
+                (mean, stddev) = mean_and_stddev(original_lines, original_i + offset)
+                setattr(new_op, attribute, getattr(new_op, attribute) + mean)
+            original_i += 6 * 4
+        else: # builtin op
+            new_op.name = op_name
+            for (offset, attribute) in zip(builtin_offsets, builtin_attributes):
+                (mean, stddev) = mean_and_stddev(original_lines, original_i + offset)
+                setattr(new_op, attribute, mean)
+            original_i += 4
             original.append(new_op)
-            state = State.NEW_OP
 
-    for i in range(len(original)):
-        op = original[i]
-        if op.conv_index > -1:
-            print("Conv %d :\n    T %.4f\n    E %.4f\n    P %.4f" % (op.conv_index, op.time, op.energy, op.power))
+    if approx_lines is None:
+        for i in range(len(original)):
+            original_op = original[i]
+            if original_op.name == "CONV_2D":
+                print("Conv %d :" % (original_op.conv_index))
+                print("    Original :")
+                print("        Time   %.4f" % (original_op.time))
+                print("        Energy %.4f" % (original_op.energy))
+                print("        Power  %.4f" % (original_op.power))
+    else:
+        for i in range(len(original)):
+            original_op = original[i]
+            approx_op = approx[i]
+            if original_op.name == "CONV_2D" and approx_op.conv_index == "Dragunov":
+                print("Conv %d :" % (original_op.conv_index))
+                print("    Original :")
+                print("        Time         %.4f" % (original_op.time))
+                print("        Energy       %.4f" % (original_op.energy))
+                print("        Power        %.4f" % (original_op.power))
+                print("    Approximate :")
+                print("        Time         %.4f" % (approx_op.time))
+                print("        Energy       %.4f" % (approx_op.energy))
+                print("        Power        %.4f" % (approx_op.power))
+                print("        Extra time   %.4f" % (approx_op.extra_time))
+                print("        Extra energy %.4f" % (approx_op.extra_energy))
+                print("        Extra power  %.4f" % (approx_op.extra_power))
+                print("        Total time   %.4f" % (approx_op.time + approx_op.extra_time))
+                print("        Total energy %.4f" % (approx_op.energy + approx_op.extra_energy))
+                print("        Total power  %.4f" % (approx_op.power + approx_op.extra_power))
