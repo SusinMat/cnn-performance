@@ -101,10 +101,8 @@ if __name__ == '__main__':
             original_op = original[i]
             if original_op.name == "CONV_2D":
                 print("Conv %d :" % (original_op.conv_index))
-                print("    Original :")
-                print("        Time   %.4f" % (original_op.time))
-                print("        Energy %.4f" % (original_op.energy))
-                print("        Power  %.4f" % (original_op.power))
+                print("    Time   %.4f" % (original_op.time))
+                print("    Energy %.4f" % (original_op.energy))
     else:
         for i in range(len(original)):
             original_op = original[i]
@@ -114,14 +112,18 @@ if __name__ == '__main__':
                 print("    Original :")
                 print("        Time         %.4f" % (original_op.time))
                 print("        Energy       %.4f" % (original_op.energy))
-                print("        Power        %.4f" % (original_op.power))
                 print("    Approximate :")
                 print("        Total time   %.4f" % (approx_op.total_time()))
                 print("        Total energy %.4f" % (approx_op.total_energy()))
-                print("        Total power  %.4f" % (approx_op.total_power()))
                 print("        Time         %.4f" % (approx_op.time))
                 print("        Energy       %.4f" % (approx_op.energy))
-                print("        Power        %.4f" % (approx_op.power))
                 print("        Extra time   %.4f" % (approx_op.extra_time))
                 print("        Extra energy %.4f" % (approx_op.extra_energy))
-                print("        Extra power  %.4f" % (approx_op.extra_power))
+                if approx_op.total_time() < original_op.time and original_op.time > 0.0:
+                    print("    Time gain of %.2f%%" % ((original_op.time - approx_op.total_time()) / original_op.time * 100.00))
+                else:
+                    print("    No time gain (%.2f%%)" % ((original_op.time - approx_op.total_time()) / original_op.time * 100.00))
+                if approx_op.total_energy() < original_op.energy and original_op.energy > 0.0:
+                    print("    Energy gain of %.2f%%" % ((original_op.energy - approx_op.total_energy()) / original_op.energy * 100.00))
+                else:
+                    print("    No energy gain (%.2f%%)" % ((original_op.energy - approx_op.total_energy()) / original_op.energy * 100.00))
