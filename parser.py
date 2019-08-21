@@ -103,19 +103,19 @@ if __name__ == '__main__':
         for i in range(len(original)):
             original_op = original[i]
             approx_op = approx[i]
-            if original_op.name == "CONV_2D" and approx_op.conv_index == "Dragunov":
+            if original_op.name == "CONV_2D" and approx_op.name == "Dragunov":
                 print("Conv %d :" % (original_op.conv_index))
                 print("    Original :")
                 print("        Time         %.4f" % (original_op.time))
                 print("        Energy       %.4f" % (original_op.energy))
                 print("        Power        %.4f" % (original_op.power))
                 print("    Approximate :")
+                print("        Total time   %.4f" % (approx_op.time + approx_op.extra_time))
+                print("        Total energy %.4f" % (approx_op.energy + approx_op.extra_energy))
+                print("        Total power  %.4f" % (approx_op.power + approx_op.extra_power))
                 print("        Time         %.4f" % (approx_op.time))
                 print("        Energy       %.4f" % (approx_op.energy))
                 print("        Power        %.4f" % (approx_op.power))
                 print("        Extra time   %.4f" % (approx_op.extra_time))
                 print("        Extra energy %.4f" % (approx_op.extra_energy))
                 print("        Extra power  %.4f" % (approx_op.extra_power))
-                print("        Total time   %.4f" % (approx_op.time + approx_op.extra_time))
-                print("        Total energy %.4f" % (approx_op.energy + approx_op.extra_energy))
-                print("        Total power  %.4f" % (approx_op.power + approx_op.extra_power))
