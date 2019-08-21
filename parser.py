@@ -69,13 +69,10 @@ def parse_lines(lines):
                 (mean, stddev) = mean_and_stddev(lines, i + offset)
                 setattr(new_op, attribute, mean)
             i += 4
-            ops.append(new_op)
+        ops.append(new_op)
     return ops
 
 if __name__ == '__main__':
-    original = []
-    approx = []
-
     if len(sys.argv) != 2:
         print("Usage: ./parser.py [profiling_file.out]")
         exit(1)
