@@ -120,12 +120,12 @@ if __name__ == '__main__':
                 print("        Extra time   %.4f" % (approx_op.extra_time))
                 print("        Extra energy %.4f" % (approx_op.extra_energy))
                 if approx_op.total_time() < original_op.time and original_op.time > 0.0:
-                    print("    # Time gain of %.2f%%" % ((original_op.time - approx_op.total_time()) / original_op.time * 100.00))
+                    print("    # Time gain of %+.2f%%" % ((original_op.time - approx_op.total_time()) / original_op.time * 100.00))
                 else:
-                    print("    # No time gain (%.2f%%)" % ((original_op.time - approx_op.total_time()) / original_op.time * 100.00))
-                print("    # Potential time gain (%.2f%%)" % ((original_op.time - approx_op.time) / original_op.time * 100.00))
+                    print("    # No time gain (%+.2f%%)" % ((original_op.time - approx_op.total_time()) / original_op.time * 100.00))
+                print("    # Potential time gain %+.2f%%" % ((original_op.time - approx_op.time) / original_op.time * 100.00))
                 if approx_op.total_energy() < original_op.energy and original_op.energy > 0.0:
-                    print("    # Energy gain of %.2f%%" % ((original_op.energy - approx_op.total_energy()) / original_op.energy * 100.00))
+                    print("    # Energy gain of %+.2f%%" % ((original_op.energy - approx_op.total_energy()) / original_op.energy * 100.00))
                 else:
-                    print("    # No energy gain (%.2f%%)" % ((original_op.energy - approx_op.total_energy()) / original_op.energy * 100.00))
-                print("    # Potential energy gain (%.2f%%)" % ((original_op.energy - approx_op.energy) / original_op.energy * 100.00))
+                    print("    # No energy gain (%+.2f%%)" % ((original_op.energy - approx_op.total_energy()) / original_op.energy * 100.00))
+                print("    # Potential energy gain %+.2f%%" % ((original_op.energy - approx_op.energy) / original_op.energy * 100.00))
