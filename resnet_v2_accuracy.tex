@@ -1,0 +1,21 @@
+\begin{table}
+\centering
+\begin{tabular}{|l|r|r|r|r|}
+\hline
+Conv Layers & Top 1 \% & Top 5 \% & T. $\Delta$ & E. $\Delta$ \\\hline
+-- & 71.70 & 82.80 &  & \\\hline
+29,50,86 & 71.20 & 81.90 &  &  \\\hline
+6,29,50,86 & 67.03 & 80.27 &  &  \\\hline
+29,50,68,86 & 70.93 & 81.80 &  &  \\\hline
+29,50,53,68,86 & 70.95 & 81.83 &  &  \\\hline
+53 & 71.60 & 81.97 &  & \\\hline
+29,32,50,53,68,86 & 71.20 & 81.85 &  &  \\\hline
+32,50,53,68,86 & 70.85 & 81.73 &  &  \\\hline
+29,32,44,50,53,68,86 & 70.83 & 81.90 &  &  \\\hline
+47,50,53,56,59,62 & 70.88 & 81.73 &  &  \\\hline
+29,32,44,47,50,53,56,59,62,68,86 & 70.83 & 81.62 &  &  \\\hline
+22,29,32,44,47,50,53,56,59,62,68,86 & 68.08 & 80.73 &  &  \\\hline
+\end{tabular}
+\caption{Variation in accuracy of the resnet\_v2 model, with the SVD factorization strategy applied to different subsets of its convolutional layers. Higher values represent lower loss.}
+\label{resnet_v2-accuracy}
+\end{table}

@@ -1,0 +1,18 @@
+\begin{table}
+\centering
+\begin{tabular}{|l|r|r|r|r|}
+\hline
+Conv Layers & Top 1 \% & Top 5 \% & T. $\Delta$ & E. $\Delta$ \\\hline
+-- & 25.25 & 44.75 &  & \\\hline
+18 & 18.07 & 34.85 &  &  \\\hline
+21 & 14.40 & 29.73 &  &  \\\hline
+15 & 16.75 & 33.67 &  &  \\\hline
+24 & 4.88 & 12.55 &  &  \\\hline
+15,18 & 12.20 & 25.70 &  &  \\\hline
+18,21 & 9.07 & 21.35 &  &  \\\hline
+15,18,21 & 6.60 & 16.53 &  &  \\\hline
+15,18,21,24 & 1.25 & 5.22 &  &  \\\hline
+\end{tabular}
+\caption{Variation in accuracy of the squeezenet model, with the SVD factorization strategy applied to different subsets of its convolutional layers. Higher values represent lower loss.}
+\label{squeezenet-accuracy}
+\end{table}

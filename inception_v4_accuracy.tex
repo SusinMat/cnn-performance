@@ -1,0 +1,18 @@
+\begin{table}
+\centering
+\begin{tabular}{|l|r|r|r|r|}
+\hline
+Conv Layers & Top 1 \% & Top 5 \% & T. $\Delta$ & E. $\Delta$ \\\hline
+-- & 76.80 & 83.70 &  & \\\hline
+13,23 & 74.20 & 82.75 &  &  \\\hline
+5,13,23 & 61.45 & 76.38 &  &  \\\hline
+16,22,27,34,36,39,42 & 73.25 & 82.45 &  &  \\\hline
+16,22,27,34,36,39,41,42 & 72.42 & 82.12 &  &  \\\hline
+16,22,34,37,39,42,114 & 73.05 & 82.38 &  &  \\\hline
+16,22,27,34,36,39,42,114 & 72.45 & 82.25 &  &  \\\hline
+16,22,34,37,39,42,114,118 & 71.40 & 81.62 &  &  \\\hline
+13,16,22,23,27,34,36,39,42,114 & 68.80 & 80.73 &  &  \\\hline
+\end{tabular}
+\caption{Variation in accuracy of the inception\_v4 model, with the SVD factorization strategy applied to different subsets of its convolutional layers. Higher values represent lower loss.}
+\label{inception_v4-accuracy}
+\end{table}
