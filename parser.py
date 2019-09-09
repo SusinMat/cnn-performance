@@ -62,6 +62,22 @@ class Conv:
     def total_energy_max(self):
         return self.original_energy - self.approx_energy
 
+class Approximation:
+    conv_layers = []
+    top1 = float("NaN")
+    top5 = float("NaN")
+    def __init__(self, conv_layers=[], top1=float("NaN"), top5=float("NaN")):
+        self.conv_layers = conv_layers
+        self.top1 = top1
+        self.top5 = top5
+
+class Gain:
+    time_gain = float("NaN")
+    energy_gain = float("NaN")
+    def __init__(self, time_gain=float("NaN"), energy_gain=float("NaN")):
+        self.time_gain = time_gain
+        self.energy_gain = energy_gain
+
 average_number_pattern = re.compile(r".+\s+(?P<mean>\d+\.\d+)\s+\w+\s+\(.(?P<stddev>\d+\.\d+)\)")
 def mean_and_stddev(lines, i):
         match = average_number_pattern.search(lines[i])
@@ -113,18 +129,42 @@ if __name__ == '__main__':
     original_file = sys.argv[1]
     cnn_name = original_file.replace(".out", "")
     approx_file = "reconstructed_" + original_file
+    accuracy_file = cnn_name + "_accuracy.tex"
 
     original_lines = [line for line in [line.rstrip("\n") for line in open(original_file).readlines()] if line != ""]
+
     if os.path.isfile(approx_file):
         approx_lines = [line for line in [line.rstrip("\n") for line in open(approx_file).readlines()] if line != ""]
     else:
         approx_lines = None
+
+    if os.path.isfile(accuracy_file):
+        accuracy_lines = [line for line in [line.rstrip("\n") for line in open(accuracy_file).readlines()] if line != ""]
+    else:
+        accuracy_lines = None
+
+    accuracy_results = []
+    if accuracy_lines is not None:
+        i = 0
+        while "&" not in accuracy_lines[i]:
+            i += 1
+        i += 2
+        accuracy_file_begin = i
+        while "&" in accuracy_lines[i]:
+            accuracy_file_end = i
+            accuracy_line = [line.strip() for line in accuracy_lines[i].split("&")]
+            accuracy_layers = [int(layer) for layer in accuracy_line[0].split(",")]
+            new_accuracy = Approximation(conv_layers=accuracy_layers, top1=float(accuracy_line[1]), top5=float(accuracy_line[2]))
+            accuracy_results.append(new_accuracy)
+            i += 1
+
 
     original = parse_lines(original_lines)
     if approx_lines is not None:
         approx = parse_lines(approx_lines)
 
     conv_list = []
+    gain_list = {}
 
     if approx_lines is None:
         for i in range(len(original)):
@@ -177,9 +217,10 @@ if __name__ == '__main__':
         print("\\hline")
         print("Conv layer & O. time & O. energy & Time $\Delta$ & Energy $\Delta$ & Time \% & Energy \% \\\\\\hline")
         for conv in conv_list:
+            gain_list[conv.conv_index] = Gain(time_gain=round(conv.total_time_diff()), energy_gain=conv.total_energy_diff())
             print("%02d & %d & %.3f & %d & %.3f & %.1f & %.1f \\\\\\hline" % (conv.conv_index,
-                conv.original_time, conv.original_energy,
-                conv.total_time_diff(), conv.total_energy_diff(),
+                round(conv.original_time), conv.original_energy,
+                round(conv.total_time_diff()), conv.total_energy_diff(),
                 conv.total_time_diff() / conv.original_time * 100.0, conv.total_energy_diff() / conv.original_energy * 100.0
                 ))
         print("\\end{tabular}")
@@ -194,11 +235,27 @@ if __name__ == '__main__':
         print("Conv layer & O. time & O. energy & Time $\Delta$ & Energy $\Delta$ & Time \% & Energy \% \\\\\\hline")
         for conv in conv_list:
             print("%02d & %d & %.3f & %d & %.3f & %.1f & %.1f \\\\\\hline" % (conv.conv_index,
-                conv.original_time, conv.original_energy,
-                conv.total_time_max(), conv.total_energy_max(),
-                conv.total_time_max() / conv.original_time * 100.0, conv.total_energy_max() / conv.original_energy * 100.0
+                round(conv.original_time), conv.original_energy,
+                round(conv.total_time_max()), conv.total_energy_max(),
+                round(conv.total_time_max() / conv.original_time * 100.0), conv.total_energy_max() / conv.original_energy * 100.0
                 ))
         print("\\end{tabular}")
         print("\\caption{Upper bound on the performance of the convolutional layers of %s with the SVD factorization strategy, assuming only the time and energy spent on convolutions (Phases C, Z, and F), bias addition, and activation. Positive values show improvement.}" % (cnn_name.replace("_", "\\_")))
         print("\\label{%s-max-performance}" % (cnn_name))
         print("\\end{table}")
+
+        if approx_lines is not None and approx_lines is not None:
+            print("")
+            [print(line) for line in accuracy_lines[:accuracy_file_begin]]
+            for accuracy in accuracy_results:
+                time_gain = 0.0
+                energy_gain = 0.0
+                for conv_layer in accuracy.conv_layers:
+                    time_gain += gain_list[conv_layer].time_gain
+                    energy_gain += gain_list[conv_layer].energy_gain
+                print("%s & %.2f & %.2f & %d & %.4f \\\\\\hline" % (",".join([str(conv_layer) for conv_layer in accuracy.conv_layers]),
+                                                              accuracy.top1,
+                                                              accuracy.top5,
+                                                              round(time_gain),
+                                                              energy_gain))
+            [print(line) for line in accuracy_lines[accuracy_file_end + 1:]]
