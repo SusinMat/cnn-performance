@@ -85,10 +85,12 @@ def mean_and_stddev(lines, i):
         stddev = float(match.group("stddev"))
         return (mean, stddev)
 
-def parse_lines(lines):
+def parse_lines(lines, print_total=False):
     ops = []
     i = 0
     conv_count = 0
+    conv2d_total_time = 0
+    conv2d_total_energy = 0.0
 
     while "- PROFILER -" not in lines[i]:
         i += 1
@@ -118,7 +120,12 @@ def parse_lines(lines):
                 (mean, stddev) = mean_and_stddev(lines, i + offset)
                 setattr(new_op, attribute, mean)
             i += 4
+        if op_name == "CONV_2D":
+            conv2d_total_time += new_op.time
+            conv2d_total_energy += new_op.energy
         ops.append(new_op)
+    if print_total:
+        print("CONV_2D total time: %d\nCONV_2D total energy: %.4f" % (round(conv2d_total_time / 1000), conv2d_total_energy))
     return ops
 
 if __name__ == '__main__':
@@ -159,7 +166,7 @@ if __name__ == '__main__':
             i += 1
 
 
-    original = parse_lines(original_lines)
+    original = parse_lines(original_lines, print_total=True)
     if approx_lines is not None:
         approx = parse_lines(approx_lines)
 
@@ -259,3 +266,9 @@ if __name__ == '__main__':
                                                               round(time_gain),
                                                               energy_gain))
             [print(line) for line in accuracy_lines[accuracy_file_end + 1:]]
+        conv2d_large_time = 0
+        conv2d_large_energy = 0.0
+        for conv in conv_list:
+            conv2d_large_time += conv.original_time
+            conv2d_large_energy += conv.original_energy
+        print("CONV_2D large time: %d\nCONV_2D large energy: %.4f" % (round(conv2d_large_time), conv2d_large_energy))
