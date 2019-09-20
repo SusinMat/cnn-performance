@@ -225,7 +225,7 @@ if __name__ == '__main__':
         print("Conv layer & O. time & O. energy & Time $\Delta$ & Energy $\Delta$ & Time \% & Energy \% \\\\\\hline")
         for conv in conv_list:
             gain_list[conv.conv_index] = Gain(time_gain=round(conv.total_time_diff()), energy_gain=conv.total_energy_diff())
-            print("%02d & %d & %.3f & %d & %.3f & %.1f & %.1f \\\\\\hline" % (conv.conv_index,
+            print("%02d & %d & %.2f & %d & %.2f & %.1f & %.1f \\\\\\hline" % (conv.conv_index,
                 round(conv.original_time), conv.original_energy,
                 round(conv.total_time_diff()), conv.total_energy_diff(),
                 conv.total_time_diff() / conv.original_time * 100.0, conv.total_energy_diff() / conv.original_energy * 100.0
@@ -241,7 +241,7 @@ if __name__ == '__main__':
         print("\\hline")
         print("Conv layer & O. time & O. energy & Time $\Delta$ & Energy $\Delta$ & Time \% & Energy \% \\\\\\hline")
         for conv in conv_list:
-            print("%02d & %d & %.3f & %d & %.3f & %.1f & %.1f \\\\\\hline" % (conv.conv_index,
+            print("%02d & %d & %.2f & %d & %.2f & %.1f & %.1f \\\\\\hline" % (conv.conv_index,
                 round(conv.original_time), conv.original_energy,
                 round(conv.total_time_max()), conv.total_energy_max(),
                 round(conv.total_time_max() / conv.original_time * 100.0), conv.total_energy_max() / conv.original_energy * 100.0
@@ -260,7 +260,7 @@ if __name__ == '__main__':
                 for conv_layer in accuracy.conv_layers:
                     time_gain += gain_list[conv_layer].time_gain
                     energy_gain += gain_list[conv_layer].energy_gain
-                print("%s & %.2f & %.2f & %d & %.4f \\\\\\hline" % (",".join([str(conv_layer) for conv_layer in accuracy.conv_layers]),
+                print("%s & %.2f & %.2f & %d & %.2f \\\\\\hline" % (",".join([str(conv_layer) for conv_layer in accuracy.conv_layers]),
                                                               accuracy.top1,
                                                               accuracy.top5,
                                                               round(time_gain),
@@ -271,4 +271,6 @@ if __name__ == '__main__':
         for conv in conv_list:
             conv2d_large_time += conv.original_time
             conv2d_large_energy += conv.original_energy
+
+        print("")
         print("CONV_2D large time: %d\nCONV_2D large energy: %.4f" % (round(conv2d_large_time), conv2d_large_energy))
