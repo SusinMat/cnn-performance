@@ -13,42 +13,62 @@ class State(enum.Enum):
 class Layer:
     name = ""
     time = 0.0
+    time_std = 0.0
     energy = 0.0
-    power = 0.0
+    energy_std = 0.0
     extra_time = 0.0
+    extra_time_std = 0.0
     extra_energy = 0.0
-    extra_power = 0.0
+    extra_energy_std = 0.0
     conv_index = -1
     def __init__(self):
         self.name = ""
         self.time = 0.0
+        self.time_std = 0.0
         self.energy = 0.0
-        self.power = 0.0
+        self.energy_std = 0.0
         self.extra_time = 0.0
+        self.extra_time_std = 0.0
         self.extra_energy = 0.0
-        self.extra_power = 0.0
+        self.extra_energy_std = 0.0
         conv_index = -1
     def total_time(self):
         return self.time + self.extra_time
     def total_energy(self):
         return self.energy + self.extra_energy
+    def total_time_std(self):
+        return self.time_std + self.extra_time_std
+    def total_energy_std(self):
+        return self.energy_std + self.extra_energy_std
 
 class Conv:
     original_time = 0.0
+    original_time_std = 0.0
     original_energy = 0.0
+    original_energy_std = 0.0
     approx_time = 0.0
+    approx_time_std = 0.0
     approx_energy = 0.0
+    approx_energy_std = 0.0
     extra_time = 0.0
+    extra_time_std = 0.0
     extra_energy = 0.0
+    extra_energy_std = 0.0
     conv_index = -1
     def __init__(self):
-        original_time = 0.0
-        original_energy = 0.0
-        approx_time = 0.0
-        approx_energy = 0.0
-        extra_time = 0.0
-        extra_energy = 0.0
-        conv_index = -1
+        self.original_time = 0.0
+        self.original_time_std = 0.0
+        self.original_energy = 0.0
+        self.original_energy_std = 0.0
+        self.approx_time = 0.0
+        self.approx_time_std = 0.0
+        self.approx_energy = 0.0
+        self.approx_energy_std = 0.0
+        self.extra_time = 0.0
+        self.extra_time_std = 0.0
+        self.extra_energy = 0.0
+        self.extra_energy_std = 0.0
+        self.conv_index = -1
     def total_time(self):
         return self.approx_time + self.extra_time
     def total_energy(self):
@@ -61,6 +81,18 @@ class Conv:
         return self.original_time - self.approx_time
     def total_energy_max(self):
         return self.original_energy - self.approx_energy
+    def total_time_std(self):
+        return self.approx_time_std + self.extra_time_std
+    def total_energy_std(self):
+        return self.approx_energy_std + self.extra_energy_std
+    def total_time_diff_std(self):
+        return self.total_time_std()
+    def total_energy_diff_std(self):
+        return self.total_energy_std()
+    def total_time_max_std(self):
+        return self.original_time_std + self.approx_time_std
+    def total_energy_max_std(self):
+        return self.original_energy_std + self.approx_energy_std
 
 class Approximation:
     conv_layers = []
@@ -79,6 +111,7 @@ class Gain:
         self.energy_gain = energy_gain
 
 average_number_pattern = re.compile(r".+\s+(?P<mean>\d+\.\d+)\s+\w+\s+\(.(?P<stddev>\d+\.\d+)\)")
+
 def mean_and_stddev(lines, i):
         match = average_number_pattern.search(lines[i])
         mean = float(match.group("mean"))
@@ -111,14 +144,20 @@ def parse_lines(lines, print_total=False):
         if "Dragunov_" in op_name:
             new_op.name = "Dragunov"
             for (offset, attribute) in zip(dragunov_offsets, dragunov_attributes):
+                if "power" in attribute:
+                    continue
                 (mean, stddev) = mean_and_stddev(lines, i + offset)
                 setattr(new_op, attribute, getattr(new_op, attribute) + mean)
+                setattr(new_op, attribute + "_std", getattr(new_op, attribute + "_std") + stddev)
             i += 6 * 4
         else: # builtin op
             new_op.name = op_name
             for (offset, attribute) in zip(builtin_offsets, builtin_attributes):
+                if "power" in attribute:
+                    continue
                 (mean, stddev) = mean_and_stddev(lines, i + offset)
                 setattr(new_op, attribute, mean)
+                setattr(new_op, attribute + "_std", stddev)
             i += 4
         if op_name == "CONV_2D":
             conv2d_total_time += new_op.time
@@ -187,11 +226,17 @@ if __name__ == '__main__':
             if original_op.name == "CONV_2D" and approx_op.name == "Dragunov":
                 new_conv = Conv()
                 new_conv.original_time = original_op.time / 1000.0
+                new_conv.original_time_std = original_op.time_std / 1000.0
                 new_conv.original_energy = original_op.energy
+                new_conv.original_energy_std = original_op.energy_std
                 new_conv.approx_time = approx_op.time / 1000.0
+                new_conv.approx_time_std = approx_op.time_std / 1000.0
                 new_conv.approx_energy = approx_op.energy
+                new_conv.approx_energy_std = approx_op.energy_std
                 new_conv.extra_time = approx_op.extra_time / 1000.0
+                new_conv.extra_time_std = approx_op.extra_time_std / 1000.0
                 new_conv.extra_energy = approx_op.extra_energy
+                new_conv.extra_energy_std = approx_op.extra_energy_std
                 new_conv.conv_index = original_op.conv_index
                 conv_list.append(new_conv)
                 print("# Conv %d :" % (original_op.conv_index))
@@ -225,31 +270,42 @@ if __name__ == '__main__':
         print("Conv layer & O. time & O. energy & Time $\Delta$ & Energy $\Delta$ & Time \% & Energy \% \\\\\\hline")
         for conv in conv_list:
             gain_list[conv.conv_index] = Gain(time_gain=round(conv.total_time_diff()), energy_gain=conv.total_energy_diff())
-            print("%02d & %d & %.2f & %d & %.2f & %.1f & %.1f \\\\\\hline" % (conv.conv_index,
-                round(conv.original_time), conv.original_energy,
-                round(conv.total_time_diff()), conv.total_energy_diff(),
+            print("%02d & %d $\pm$ %d & %.2f $\pm$ %.2f & %d $\pm$ %d & %.2f $\pm$ %.2f & %.1f & %.1f \\\\\\hline" % (
+                conv.conv_index,
+                round(conv.original_time), round(conv.original_time_std),
+                conv.original_energy, conv.original_energy_std,
+                round(conv.total_time_diff()), round(conv.total_time_diff_std()),
+                conv.total_energy_diff(), conv.total_energy_diff_std(),
                 conv.total_time_diff() / conv.original_time * 100.0, conv.total_energy_diff() / conv.original_energy * 100.0
                 ))
         print("\\end{tabular}")
         print("\\caption{Performance of the convolutional layers of %s, before the application of the SVD factorization strategy, and the gains from after its application. Positive values show improvement.}" % (cnn_name.replace("_", "\\_")))
         print("\\label{%s-performance}" % (cnn_name))
         print("\\end{table}")
+
         print("")
+
         print("\\begin{table}")
         print("\\centering")
         print("\\begin{tabular}{|l|r|r|r|r|r|r|}")
         print("\\hline")
         print("Conv layer & O. time & O. energy & Time $\Delta$ & Energy $\Delta$ & Time \% & Energy \% \\\\\\hline")
         for conv in conv_list:
-            print("%02d & %d & %.2f & %d & %.2f & %.1f & %.1f \\\\\\hline" % (conv.conv_index,
-                round(conv.original_time), conv.original_energy,
-                round(conv.total_time_max()), conv.total_energy_max(),
-                round(conv.total_time_max() / conv.original_time * 100.0), conv.total_energy_max() / conv.original_energy * 100.0
+            print("%02d & %d $\pm$ %d & %.2f $\pm$ %.2f & %d $\pm$ %d & %.2f $\pm$ %.2f & %.1f & %.1f \\\\\\hline" % (
+                conv.conv_index,
+                round(conv.original_time), round(conv.original_time_std),
+                conv.original_energy, conv.original_energy_std,
+                round(conv.total_time_max()), (conv.total_time_max_std()),
+                conv.total_energy_max(), conv.total_energy_max_std(),
+                round(conv.total_time_max() / conv.original_time * 100.0),
+                conv.total_energy_max() / conv.original_energy * 100.0
                 ))
         print("\\end{tabular}")
         print("\\caption{Upper bound on the performance of the convolutional layers of %s with the SVD factorization strategy, assuming only the time and energy spent on convolutions (Phases C, Z, and F), bias addition, and activation. Positive values show improvement.}" % (cnn_name.replace("_", "\\_")))
         print("\\label{%s-max-performance}" % (cnn_name))
         print("\\end{table}")
+
+        # exit()
 
         if approx_lines is not None and approx_lines is not None:
             print("")
